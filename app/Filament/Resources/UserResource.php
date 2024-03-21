@@ -9,10 +9,16 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
+
+    public static function getModelLabel(): string
+    {
+        return Str::lower(__('User'));
+    }
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
