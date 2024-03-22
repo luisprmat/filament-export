@@ -26,10 +26,16 @@ class UserExporter extends Exporter
 
     public static function getCompletedNotificationBody(Export $export): string
     {
-        $body = 'Your user export has completed and '.number_format($export->successful_rows).' '.str('row')->plural($export->successful_rows).' exported.';
+        $body = __('Your users export has completed and :rowsCount :rowsLabel exported.', [
+            'rowsCount' => number_format($export->successful_rows),
+            'rowsLabel' => str(__('row'))->plural($export->successful_rows),
+        ]);
 
         if ($failedRowsCount = $export->getFailedRowsCount()) {
-            $body .= ' '.number_format($failedRowsCount).' '.str('row')->plural($failedRowsCount).' failed to export.';
+            $body .= ' '.__(':failedRowsCount :failedRowsLabel failed to export.', [
+                'failedRowsCount' => number_format($failedRowsCount),
+                'failedRowsLabel' => str(__('row'))->plural($failedRowsCount),
+            ]);
         }
 
         return $body;
